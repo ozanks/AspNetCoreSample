@@ -1,0 +1,51 @@
+﻿@model MvcWebUI.Models.CartListViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<h1>Sepet</h1>
+<div class="container">
+    @if (Model.Cart.CartLines.Count == 0)
+    {
+        <h2 class="badge badge-danger">Sepetiniz boş</h2>
+    }
+    else
+    {
+
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Ürün Adı</th>
+                    <th>Açıklama</th>
+                    <th>Fiyat</th>
+                    <th>Stok Adedi</th>
+                    <th>Satış Adedi</th>
+                </tr>
+            </thead>
+            @foreach (var cartLine in Model.Cart.CartLines)
+            {
+                <tbody>
+                    <tr>
+                        <td>@cartLine.Product.ProductId</td>
+                        <td>@cartLine.Product.ProductName</td>
+                        <td>@cartLine.Product.QuantityPerUnit</td>
+                        <td>@cartLine.Product.UnitPrice</td>
+                        <td>@cartLine.Product.UnitsInStock</td>
+                        <td>@cartLine.Quantity</td>
+                        <td><a class="btn btn-danger" asp-controller="Cart" asp-action="RemoveFromCart" asp-route-productId="@cartLine.Product.ProductId">Sepetten Sil</a></td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+        <div class="row">
+            <div class="col-lg-8"></div>
+            <div class="col-md-3"><a class="btn btn-warning btn-group-sm" asp-controller="Cart" asp-action="Complete">Alışverişimi Tamamla</a></div>
+            <div class="col-1"></div>
+        </div>
+
+        @*<button class="btn btn-warning"  value="Alışverişimi Tamamla" />*@
+    }
+</div>
+
